@@ -16,6 +16,18 @@ public class Server implements Runnable {
         this.port = port;
     }
 
+
+    private long calculate(int input) {
+        long[] fibAray = new long[input + 1];
+        fibAray[0] = 0;
+        fibAray[1] = 1;
+        for (int i = 2; i <= input; i++) {
+            fibAray[i] = fibAray[i - 1] + fibAray[i - 2];
+        }
+        return fibAray[input];
+    }
+
+
     @Override
     public void run() {
         try (ServerSocket ss = new ServerSocket(port);
@@ -26,26 +38,20 @@ public class Server implements Runnable {
             while (true) {
                 String input = in.readLine();
                 if (input.equals("end")) break;
-
-                if (input != null) out.println("Значение получено, вычисления начались");
-                Thread.sleep(CALCULATIONPERIOD);
-
-
+                out.println("Значение получено, вычисления начались");
                 int number = Integer.parseInt(input);
-                if (number != 0) {
-                    int[] fibAray = new int[number + 1];
-                    fibAray[0] = 0;
-                    fibAray[1] = 1;
-                    for (int i = 2; i <= number; i++) {
-                        fibAray[i] = fibAray[i - 1] + fibAray[i - 2];
-                    }
-                    out.println("значение члена ряда Фибоначчи с номером: " + number + " равно: " + fibAray[number]);
-                } else out.println("Введите зачение не равное нулю");
+                Thread.sleep(CALCULATIONPERIOD);
+                out.println("значение члена ряда Фибоначчи с номером: " + number + " равно: " + calculate(number));
             }
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException |
+                InterruptedException e) {
             e.printStackTrace();
         } finally {
             System.out.println("Сервер остановлен");
         }
+
     }
+
+
 }
+

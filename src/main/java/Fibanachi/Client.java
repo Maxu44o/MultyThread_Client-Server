@@ -26,10 +26,13 @@ public class Client implements Runnable {
             while (true) {
                 System.out.println("Введите номер члена ряда Фибоначчи");
                 String number = scanner.nextLine();
-                out.println(number);
-                if (number.equals("end")) break;
-                System.out.println(in.readLine());
-                System.out.println("Результат расчета " + in.readLine()+"\n");
+                if (number.equals("0")|| number.equals("")) System.out.println("Введите значение не равное нулю и не пустую строку");
+                else {
+                    out.println(number);
+                    if (number.equals("end")) break;
+                    System.out.println(in.readLine());
+                    System.out.println("Результат расчета " + in.readLine() + "\n");
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
